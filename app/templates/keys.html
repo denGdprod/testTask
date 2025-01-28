@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+  <h1>Keys for Server: {{ server.name }}</h1>
+  <button onclick="location.href='{{ url_for('add_key', server_id=server.id) }}'">Add Key</button>
+</div>
+<div class="mt-5">
+  {% if keys and keys | length > 0 %}
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Created Date</th>
+            <th>Payed</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key in keys %}
+          <tr>
+            <td align="center">{{ loop.index }}</td>
+            <td align="center">{{ key.code }}</td>
+            <td align="center">{{ key.created }}</td>
+            <td align="center">
+              <input type="checkbox"
+                     data-key-id="{{ key.id }}"
+                     {% if key.payed %}checked{% endif %}
+                     onchange="togglePayed(this)">
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('servers') }}" class="btn btn-primary">Back to Servers</a>
+  {% else %}
+    <p>You have no keys added yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

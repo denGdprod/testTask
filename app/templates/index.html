@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Welcome to TelegaPRO</h1>
+  {% if current_user.is_authenticated %}
+    <p>Hello, {{ current_user.login }}! Glad to see you.</p>
+  {% endif %}
+{% endblock %}

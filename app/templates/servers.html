@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+  <h1>Server Management</h1>
+  <button onclick="location.href='/add_server'">add Server</button>
+</div>
+<div class="mt-5">
+    {% if servers and servers|length > 0 %}
+      <h3>Your Servers:</h3>
+      <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Server Name</th>
+            <th>Price</th>
+            <th>URL</th>
+            <th>Keys</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for server in servers %}
+          <tr>
+            <td align="center">{{ loop.index }}</td>
+            <td align="center">{{ server.name }}</td>
+            <td align="center">{{ "%.2f"|format(server.price) }}</td>
+            <td align="center"><a href="{{ server.url }}" target="_blank">{{ server.url }}</a></td>
+            <td align="center"><a href="{{ url_for('keys', server_id=server.id) }}" class="btn btn-info btn-sm">View Keys</a>
+            <td align="center">
+              <form style="display:inline;" action="" method="get">
+                <button type="submit">Edit</button>
+              </form>
+              <form style="display:inline;" action="" method="get">
+                <button type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div>
+        <p>You have no servers added yet.</p>
+      </div>
+    {% endif %}
+</div>
+{% endblock %}
